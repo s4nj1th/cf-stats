@@ -7,6 +7,13 @@
 
 A small Next.js app that generates simple Codeforces SVG profile cards. Enter a Codeforces username or profile URL on the homepage to preview an SVG badge for that user.
 
+## Screenshots
+
+<div>
+    <img src="./screenshots/01.png" />
+    <img src="https://cf-stats.vercel.app/profile/tourist" />
+</div>
+
 ## Quick start
 
 1. Install dependencies:
