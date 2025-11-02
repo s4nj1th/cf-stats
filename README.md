@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="">
+    <a href="https://cf-stats.vercel.app/">
         <img src="./public/logo.png" width="256"/>
     </a>
     <h1>CF Stats</h1>
