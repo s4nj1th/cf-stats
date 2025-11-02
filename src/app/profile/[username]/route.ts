@@ -175,6 +175,7 @@ export async function GET(
       "legendary grandmaster": "#ff0000",
     };
     const rankColor = colors[rank.toLowerCase()] || "#ffffff";
+    const maxRankColor = colors[maxRank.toLowerCase()] || "#ffffff";
 
     const totalWidth = 520;
     const totalHeight = 350;
@@ -197,17 +198,18 @@ export async function GET(
   <text x="20" y="35" font-size="22" font-weight="bold" fill="white">${displayName}</text>
   <text x="20" y="60" font-size="16" fill="${rankColor}">${handle}</text>
   <text x="20" y="82" font-size="14" fill="#fff">Rank: <tspan fill="${rankColor}">${rank}</tspan></text>
-  <text x="20" y="102" font-size="14" fill="#fff">Rating: ${rating} | Max: <tspan fill="${rankColor}">${maxRank}</tspan> (${maxRating})</text>
+  <text x="20" y="102" font-size="14" fill="#fff">Rating: ${rating} | Max: <tspan fill="${maxRankColor}">${maxRank}</tspan> (${maxRating})</text>
 
   <!-- Avatar -->
-  <image href="${titlePhoto}" x="420" y="25" width="70" height="70"/>
-  <rect x="420" y="25" width="70" height="70" fill="none" stroke="#fff" stroke-width="2"/>
+  <image href="${titlePhoto}" x="400" y="20" width="90" height="90"/>
+  <rect x="400" y="20" width="90" height="90" fill="none" stroke="#fff" stroke-width="2"/>
 
   <!-- Rating Graph -->
   <g transform="translate(30, 135)">
     <text x="-10" y="-8" class="text" font-size="12" opacity="0.7">Rating History</text>
     ${ratingGraph}
   </g>
+  <rect x="30" y="135" width="460" height="100" fill="none" stroke="#fff" stroke-width="2"/>
 
   <!-- Heatmap -->
   <g transform="translate(30, 265)">
