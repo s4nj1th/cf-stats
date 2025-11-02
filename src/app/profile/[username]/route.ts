@@ -69,13 +69,17 @@ function generateRatingGraph(ratingData: any[]): string {
     })
     .join(" ");
 
+  const maxIndex = ratingData.findIndex((r) => r.newRating === maxRating);
+
   const circles = ratingData
     .map((r, i) => {
       const x = (i / (ratingData.length - 1)) * width;
       const y = height - ((r.newRating - scaleMin) / range) * height;
+      const color = i === maxIndex ? "#FF0000" : "#FFD700"; // red for max point
+      const size = i === maxIndex ? 2.5 : 1.6;
       return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(
         1
-      )}" r="1.6" fill="#FFD700"/>`;
+      )}" r="${size}" fill="${color}"/>`;
     })
     .join("\n");
 
@@ -201,15 +205,15 @@ export async function GET(
   <text x="20" y="102" font-size="14" fill="#fff">Rating: ${rating} | Max: <tspan fill="${maxRankColor}">${maxRank}</tspan> (${maxRating})</text>
 
   <!-- Avatar -->
-  <image href="${titlePhoto}" x="400" y="20" width="90" height="90"/>
-  <rect x="400" y="20" width="90" height="90" fill="none" stroke="#fff" stroke-width="2"/>
+  <image href="${titlePhoto}" x="390" y="20" width="100" height="100"/>
+  <rect x="390" y="20" width="100" height="100" fill="none" stroke="#fff" stroke-width="2"/>
 
   <!-- Rating Graph -->
   <g transform="translate(30, 135)">
     <text x="-10" y="-8" class="text" font-size="12" opacity="0.7">Rating History</text>
     ${ratingGraph}
   </g>
-  <rect x="30" y="135" width="460" height="100" fill="none" stroke="#fff" stroke-width="2"/>
+  <rect x="30" y="135" width="460" height="100" fill="none" stroke="#ccc" stroke-width="2"/>
 
   <!-- Heatmap -->
   <g transform="translate(30, 265)">
