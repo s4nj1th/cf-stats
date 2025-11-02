@@ -123,8 +123,10 @@ function generateHeatmap(submissions: any[]): string {
 
   const cells = daysTrimmed
     .map((count, i) => {
-      const x = (i % cols) * (cellSize + gap);
-      const y = Math.floor(i / cols) * (cellSize + gap);
+      const col = Math.floor(i / rows);
+      const row = i % rows;
+      const x = col * (cellSize + gap);
+      const y = row * (cellSize + gap);
       const intensity = Math.min(count, 4);
       const colorScale = [
         "#161B22",
