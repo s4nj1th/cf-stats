@@ -38,12 +38,20 @@ function generateRatingGraph(ratingData: any[]): string {
     { min: 2400, max: 9999, color: "#ff0000" },
   ];
 
+  ratingData = ratingData
+    .slice()
+    .sort((a, b) => a.ratingUpdateTimeSeconds - b.ratingUpdateTimeSeconds);
+
   const minRating = Math.min(...ratingData.map((r) => r.newRating));
   const maxRating = Math.max(...ratingData.map((r) => r.newRating));
   const padding = (maxRating - minRating) * 0.1 || 100;
   const scaleMin = Math.max(0, minRating - padding);
   const scaleMax = maxRating + padding;
   const range = scaleMax - scaleMin || 1;
+
+  const minTime = ratingData[0].ratingUpdateTimeSeconds;
+  const maxTime = ratingData[ratingData.length - 1].ratingUpdateTimeSeconds;
+  const timeRange = maxTime - minTime || 1;
 
   const bandRects = bands
     .filter((band) => band.max >= scaleMin && band.min <= scaleMax)
@@ -62,8 +70,9 @@ function generateRatingGraph(ratingData: any[]): string {
     .join("\n");
 
   const points = ratingData
-    .map((r, i) => {
-      const x = (i / (ratingData.length - 1)) * width;
+    .map((r) => {
+      const t = (r.ratingUpdateTimeSeconds - minTime) / timeRange;
+      const x = t * width;
       const y = height - ((r.newRating - scaleMin) / range) * height;
       return `${x.toFixed(1)},${y.toFixed(1)}`;
     })
@@ -73,7 +82,8 @@ function generateRatingGraph(ratingData: any[]): string {
 
   const circles = ratingData
     .map((r, i) => {
-      const x = (i / (ratingData.length - 1)) * width;
+      const t = (r.ratingUpdateTimeSeconds - minTime) / timeRange;
+      const x = t * width;
       const y = height - ((r.newRating - scaleMin) / range) * height;
       const color = i === maxIndex ? "#FF0000" : "#FFD700"; // red for max point
       const size = i === maxIndex ? 2.5 : 1.6;
