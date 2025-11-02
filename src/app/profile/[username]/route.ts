@@ -179,6 +179,13 @@ export async function GET(
     const totalWidth = 520;
     const totalHeight = 350;
 
+    const displayName =
+      user.firstName || user.lastName
+        ? `${user.firstName || ""} ${user.lastName || ""}`.trim()
+        : `@${user.handle}`;
+
+    const handle = user.firstName || user.lastName ? "@" + user.handle : "";
+
     const svg = `
 <svg width="${totalWidth}" height="${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <rect width="${totalWidth}" height="${totalHeight}" rx="10" fill="#000"/>
@@ -187,10 +194,8 @@ export async function GET(
   </style>
 
   <!-- User Info -->
-  <text x="20" y="35" font-size="22" font-weight="bold" fill="white">${
-    user.firstName || ""
-  } ${user.lastName || ""}</text>
-  <text x="20" y="60" font-size="16" fill="${rankColor}">@${user.handle}</text>
+  <text x="20" y="35" font-size="22" font-weight="bold" fill="white">${displayName}</text>
+  <text x="20" y="60" font-size="16" fill="${rankColor}">${handle}</text>
   <text x="20" y="82" font-size="14" fill="#fff">Rank: <tspan fill="${rankColor}">${rank}</tspan></text>
   <text x="20" y="102" font-size="14" fill="#fff">Rating: ${rating} | Max: <tspan fill="${rankColor}">${maxRank}</tspan> (${maxRating})</text>
 
@@ -199,14 +204,14 @@ export async function GET(
   <rect x="420" y="25" width="70" height="70" fill="none" stroke="#fff" stroke-width="2"/>
 
   <!-- Rating Graph -->
-  <g transform="translate(20, 135)">
-    <text x="0" y="-8" class="text" font-size="12" opacity="0.7">Rating History</text>
+  <g transform="translate(30, 135)">
+    <text x="-10" y="-8" class="text" font-size="12" opacity="0.7">Rating History</text>
     ${ratingGraph}
   </g>
 
   <!-- Heatmap -->
-  <g transform="translate(20, 265)">
-    <text x="0" y="-8" class="text" font-size="12" opacity="0.7">Last Year Activity</text>
+  <g transform="translate(30, 265)">
+    <text x="-10" y="-8" class="text" font-size="12" opacity="0.7">Last Year Activity</text>
     ${heatmap}
   </g>
 </svg>`;
